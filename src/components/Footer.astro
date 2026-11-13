@@ -1,0 +1,21 @@
+---
+import { site } from '../config';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>在松弛的间隙里，认真地留下一点痕迹。</p>
+  <div>
+    <span>© {year} {site.author}</span>
+    <a href={`mailto:${site.email}`}>写信给我</a>
+    <a href="/rss.xml">RSS</a>
+  </div>
+</footer>
+
+<style>
+  footer { display: flex; justify-content: space-between; gap: 1.5rem; padding-top: 48px; color: var(--muted); border-top: 1px solid var(--line); font-size: 0.82rem; }
+  footer p { margin: 0; }
+  footer div { display: flex; gap: 1rem; white-space: nowrap; }
+  footer a:hover { color: var(--accent); }
+  @media (max-width: 700px) { footer { display: block; padding-top: 32px; } footer div { margin-top: 12px; flex-wrap: wrap; } }
+</style>

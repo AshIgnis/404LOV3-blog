@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featured = posts.slice(0, 3);
+---
+
+<BaseLayout>
+  <section class="intro">
+    <div class="intro-copy">
+      <p class="eyebrow">404LOV3 的个人角落</p>
+      <h1><span>脚踏实地的天马行空，</span><span>阳春白雪的鸡毛蒜皮</span></h1>
+      <p class="lede">把闪念、阅读与生活里不愿轻易略过的片段，安放在这里。</p>
+    </div>
+  </section>
+
+  <section class="writing" aria-labelledby="recent-title">
+    <div class="section-heading"><div><p class="eyebrow">最近书写</p><h2 id="recent-title" class="section-title">缓慢生长的文字</h2></div><a href="/archive">全部文章 <span>→</span></a></div>
+    <PostList posts={featured} />
+  </section>
+
+  <section class="letter">
+    <p class="eyebrow">一封短笺</p>
+    <p>不急于抵达，也不必将每一段经历都立刻解释清楚。愿这里成为一处可以慢一点的地方。</p>
+    <a href="/about">认识作者 →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { display: flex; align-items: center; min-height: 315px; padding: 66px 0 48px; }
+  .intro-copy { width: 100%; } h1 { margin: 10px 0 18px; font-size: clamp(2.25rem, 4.4vw, 4rem); font-weight: 500; letter-spacing: 0.04em; line-height: 1.32; } h1 span { display: block; white-space: nowrap; }
+  .lede { margin: 0; color: var(--muted); font-size: 1rem; }
+  .writing { margin-top: 14px; } .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+  .section-heading > a, .letter a { color: var(--accent); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.82rem; } .section-heading > a span { margin-left: 6px; }
+  .letter { margin-top: 56px; padding: 36px 42px; border-left: 2px solid var(--accent); background: linear-gradient(90deg, var(--paper-deep), transparent); }
+  .letter > p:nth-child(2) { max-width: 640px; margin: 6px 0 16px; color: var(--ink); font-size: 1.15rem; }
+  @media (max-width: 700px) { .intro { min-height: 0; padding: 54px 0 42px; align-items: flex-start; } h1 { font-size: clamp(1.88rem, 9.6vw, 2.3rem); letter-spacing: 0.02em; } .lede { font-size: 0.9rem; } .letter { margin-top: 35px; padding: 24px; } }
+</style>

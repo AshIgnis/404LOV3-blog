@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout title="文章归档" description="闲隙碎笔的全部文章">
+  <section class="page-head"><p class="eyebrow">时间留下的线索</p><h1>文章归档</h1><p>{posts.length} 篇已公开的记录。</p></section>
+  <PostList posts={posts} />
+</BaseLayout>
+<style>.page-head { padding: 56px 0 25px; } h1 { margin: 5px 0; font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 500; letter-spacing: .08em; } .page-head > p:last-child { margin: 0; color: var(--muted); font-size: .9rem; }</style>

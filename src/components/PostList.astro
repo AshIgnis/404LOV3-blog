@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, readingTime } from '../utils';
+
+interface Props { posts: CollectionEntry<'blog'>[]; }
+const { posts } = Astro.props;
+---
+
+{posts.length ? (
+  <div class="post-list">
+    {posts.map((post, index) => (
+      <article class="post-item">
+        <span class="number">{String(index + 1).padStart(2, '0')}</span>
+        <div class="post-main">
+          <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span>·</span><span>{readingTime(post.body)}</span></div>
+          <h2><a href={`/posts/${post.id}/`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+          {post.data.tags.length > 0 && <div class="tags">{post.data.tags.map((tag) => <a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>)}</div>}
+        </div>
+        <a class="read" href={`/posts/${post.id}/`} aria-label={`阅读文章：${post.data.title}`}>↗</a>
+      </article>
+    ))}
+  </div>
+) : <p class="empty">这里还没有公开文章。第一篇想法，正等着被写下。</p>}
+
+<style>
+  .post-list { margin-top: 26px; }
+  .post-item { display: grid; grid-template-columns: 44px 1fr 36px; gap: 1rem; padding: 28px 0; border-top: 1px solid var(--line); }
+  .number { padding-top: 5px; color: var(--accent); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; }
+  .post-meta, .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.72rem; }
+  h2 { margin: 4px 0 7px; font-size: clamp(1.25rem, 2vw, 1.62rem); font-weight: 500; letter-spacing: 0.04em; line-height: 1.4; }
+  h2 a:hover { color: var(--accent); }
+  p { max-width: 42rem; margin: 0; color: var(--muted); font-size: 0.94rem; line-height: 1.9; }
+  .tags { margin-top: 12px; } .tags a:hover { color: var(--accent); }
+  .read { display: grid; width: 30px; height: 30px; margin-top: 8px; place-items: center; color: var(--accent); border: 1px solid var(--line); border-radius: 50%; transition: all 160ms ease; }
+  .post-item:hover .read { color: var(--paper); background: var(--accent); border-color: var(--accent); transform: translate(2px, -2px); }
+  @media (max-width: 700px) { .post-item { grid-template-columns: 30px 1fr 28px; gap: 0.6rem; padding: 22px 0; } p { font-size: 0.88rem; } }
+</style>

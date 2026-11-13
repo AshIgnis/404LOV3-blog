@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+---
+<BaseLayout title="标签">
+  <section class="tags-page"><p class="eyebrow">散落的关键词</p><h1>标签</h1><div class="tags">{tags.map((tag) => <a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>)}</div></section>
+</BaseLayout>
+<style>.tags-page { min-height: 500px; padding: 60px 0; } h1 { margin: 4px 0 32px; font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 500; letter-spacing: .08em; } .tags { display:flex; flex-wrap:wrap; gap:12px; } .tags a { padding: 8px 13px; color: var(--moss); border:1px solid var(--line); font-family: ui-sans-serif, system-ui, sans-serif; font-size:.83rem; transition:all 160ms ease; } .tags a:hover { color:var(--paper); background:var(--moss); border-color:var(--moss); }</style>

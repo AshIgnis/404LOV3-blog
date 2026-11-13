@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config';
+---
+<BaseLayout title="关于">
+  <article class="about">
+    <img src="/avatar.jpg" alt={`${site.author} 的头像`} width="140" height="140" />
+    <p class="eyebrow">关于这个角落</p>
+    <h1>{site.title}</h1>
+    <p class="tagline">{site.description}</p>
+    <div class="prose">
+      <p>你好，我是 {site.author}。</p>
+      <p>这里是一个用来安放思考的地方：可能是读完一本书后的余味，可能是技术实践中的片段，也可能只是平常日子里值得驻足的一瞬。</p>
+      <p>不追求高频更新，只希望每一次书写都尽量真诚。</p>
+    </div>
+    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+  </article>
+</BaseLayout>
+<style>
+  .about { max-width: 680px; padding: 64px 0 40px; } img { width: 140px; height: 140px; margin-bottom: 24px; border: 8px solid var(--paper-deep); border-radius: 50% 50% 47% 53%; object-fit: cover; filter: saturate(.82); } h1 { margin: 6px 0 8px; font-size: 3.1rem; font-weight: 500; letter-spacing: .1em; } .tagline { margin: 0; color: var(--accent); font-size: 1.1rem; } .prose { margin-top: 40px; font-size: 1.03rem; } .prose p { margin: 1.25rem 0; } .mail { display: inline-block; margin-top: 15px; padding-bottom: 3px; color: var(--moss); border-bottom: 1px solid var(--moss); font-family: ui-sans-serif, system-ui, sans-serif; font-size: .83rem; } @media(max-width:700px){ .about{padding-top:48px} h1{font-size:2.3rem;} }
+</style>

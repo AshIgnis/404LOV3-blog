@@ -1,0 +1,37 @@
+---
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const configured = repo && repoId && category && categoryId;
+---
+
+<section class="comments" aria-label="评论">
+  <p class="eyebrow">留白处</p>
+  <h2>说说你的想法</h2>
+  {configured ? (
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={repo}
+      data-repo-id={repoId}
+      data-category={category}
+      data-category-id={categoryId}
+      data-mapping="pathname"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="light"
+      data-lang="zh-CN"
+      crossorigin="anonymous"
+      async
+    ></script>
+  ) : <p class="comment-note">评论区将在站点接入 GitHub Discussions 后开放。</p>}
+</section>
+
+<style>
+  .comments { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--line); }
+  h2 { margin: 3px 0 24px; font-size: 1.35rem; font-weight: 500; letter-spacing: 0.06em; }
+  .comment-note { margin: 0; padding: 18px; color: var(--muted); background: var(--paper-deep); font-size: 0.86rem; }
+</style>

@@ -1,0 +1,41 @@
+---
+import { site } from '../config';
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label={`${site.title}首页`}>
+    <img class="brand-avatar" src="/avatar.jpg" alt="" width="46" height="46" />
+    <span>
+      <strong>{site.title}</strong>
+      <small>{site.author}</small>
+    </span>
+  </a>
+  <nav aria-label="主导航">
+    <a class:list={[{ active: path === '/' }]} href="/">首页</a>
+    <a class:list={[{ active: path.startsWith('/archive') }]} href="/archive">归档</a>
+    <a class:list={[{ active: path.startsWith('/tags') }]} href="/tags">标签</a>
+    <a class:list={[{ active: path.startsWith('/about') }]} href="/about">关于</a>
+    <a class="search-trigger" href="/search" aria-label="搜索文章">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4.2 4.2"></path></svg>
+    </a>
+  </nav>
+</header>
+
+<style>
+  .site-header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 126px; padding: 28px 72px; border-bottom: 1px solid var(--line); }
+  .brand { display: inline-flex; align-items: center; gap: 13px; }
+  .brand-avatar { width: 46px; height: 46px; object-fit: cover; border: 2px solid var(--paper-deep); border-radius: 50% 50% 47% 53%; filter: saturate(0.82) contrast(0.96); }
+  strong, small { display: block; }
+  strong { font-size: 1.45rem; font-weight: 600; letter-spacing: 0.18em; }
+  small { margin-top: -3px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.67rem; letter-spacing: 0.12em; }
+  nav { display: flex; align-items: center; gap: 1.35rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.84rem; }
+  nav a { position: relative; color: var(--muted); }
+  nav a:not(.search-trigger)::after { position: absolute; bottom: -7px; left: 0; width: 0; height: 1px; background: var(--accent); content: ""; transition: width 180ms ease; }
+  nav a:hover, nav a.active { color: var(--ink); }
+  nav a:hover::after, nav a.active::after { width: 100%; }
+  .search-trigger { display: grid; width: 30px; height: 30px; place-items: center; color: var(--ink); border: 1px solid var(--line); border-radius: 50%; }
+  .search-trigger:hover { border-color: var(--accent); color: var(--accent); }
+  svg { width: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-width: 1.7; }
+  @media (max-width: 700px) { .site-header { min-height: auto; padding: 20px 24px; align-items: flex-start; } .brand-avatar { width: 38px; height: 38px; } strong { font-size: 1.12rem; } nav { gap: 0.75rem; font-size: 0.74rem; } nav a:nth-child(3), nav a:nth-child(4) { display: none; } }
+</style>
