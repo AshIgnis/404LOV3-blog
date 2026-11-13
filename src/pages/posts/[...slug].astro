@@ -12,7 +12,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="post">
+  <article class="post" data-pagefind-body>
     <header><p class="eyebrow">{post.data.tags.map((tag) => `#${tag}`).join(' · ')}</p><h1>{post.data.title}</h1><p class="summary">{post.data.description}</p><div class="meta"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span>·</span><span>{readingTime(post.body)}</span>{post.data.updatedDate && <><span>·</span><span>更新于 {formatDate(post.data.updatedDate)}</span></>}</div></header>
     <div class="prose"><Content /></div>
   </article>
